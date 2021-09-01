@@ -6,10 +6,12 @@
 	<title>Home</title>
 </head>
 <body>
-<h1 style="text-align: center">
-	Hotel Manager Home 
-</h1><hr>
-<h3 style="text-align: center"><a href="login">로그인</a></h3>
-<h3 style="text-align: center"><a href="newbie">회원가입</a></h3>
+<h1>로그인</h1><hr>
+<form method="POST" action="check_user">
+	ID : <input type=text name=userid required><br>
+	PW : <input type=text name=userpw required><br>
+	<input type=submit value="로그인">	
+</form>
+<button onclick="location.href='newbie'">회원가입</button>
 </body>
 </html>

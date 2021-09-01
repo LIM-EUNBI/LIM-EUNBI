@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>회원가입</h1><hr>
-<form method="POST" action="newinfo">
+<form method="POST" action="join">
 	이름 : <input type=text name=username required><br>
 	아이디 : <input type=text name=userid required><br>
 	비밀번호 : <input type=password name=passcode1 required><br>
@@ -17,6 +17,6 @@
 	<input type=submit value="회원가입">
 </form>
 	<button value="취소" onclick="location.href='home'">취소</button>
-	<button value="login" onclick="location.href='login'">로그인</button>
+	<!-- <button value="login" onclick="location.href='login'">로그인</button> -->
 </body>
 </html>
