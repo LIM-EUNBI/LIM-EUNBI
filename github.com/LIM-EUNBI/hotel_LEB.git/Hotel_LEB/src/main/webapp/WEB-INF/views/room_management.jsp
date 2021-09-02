@@ -23,15 +23,15 @@
         <h3 style="padding-right: 17%;">객실 목록 ▽</h3>
         <div>
             <select size=7 multiple id="select_room">
-               <c:forEach items="${list }" var="room">
+<%--                <c:forEach items="${list }" var="room">
 					<option value='${room.roomcode} ${room.typecode}'>${room.roomname},${room.typename},${room.howmany }, ${room.howmuch }</option>
-				</c:forEach>
+				</c:forEach> --%>
             </select>
         </div>
     </div>
     <div class="room_list_right">
-        <h3>객실 이름 ▷ <input type="text" name="room_name" id="room_name"></h3>
         <input type="hidden" name="roomcode" id="roomcode">
+        <h3>객실 이름 ▷ <input type="text" name="roomname" id="room_name"></h3>
         <h3>객실 분류 ▽ </h3>
         <select size=7 multiple id="select_room1">
             <c:forEach items="${roomType}" var="roomType">
@@ -41,7 +41,7 @@
         <h3>숙박 가능 인원 ▷ <input type="text" name="check_number" id="check_number"> 명</h3>
         <h3>1박 요금 ▷ <input type="text" name="price" id="price"> 원</h3>
         <div class="button_list">
-        <input type="submit" value="등록" id="submit_button">
+        <input type="button" value="등록" id="submit_button">
         <input type="button" name="delete" value="삭제" id="delete_button">
         <input type="button" value="clear" id="clear_button">
         </div>
@@ -60,6 +60,10 @@
 	.ready(function(){
 		$.post("http://localhost:8080/app/getRoomList",{},function(result){
 			console.log(result);
+			$.each(result, function(idx,value){
+				str='<option value="'+value['roomcode']+' '+value['typecode']+'">'+value['roomname']+','+value['typename']+','+value['howmany']+','+value['howmuch']+'</option>';
+				$('#select_room').append(str);
+			});
 		},'json')		
 	})
 	.on('click', '#select_room', function(){
@@ -85,8 +89,45 @@
 		}
 	})
 	.on('click', '#clear_button', function(){
-		$('#room_name,#check_number,#price').val('');
+		$('#room_name,#check_number,#price,#roomcode').val('');
 		$('#select_room1 option:selected').prop("selected", false);
+	})
+	.on('click','#delete_button',function(){
+		$.post('http://localhost:8080/app/deleteRoom',{roomcode:$('#roomcode').val()},
+				function(result){
+			console.log(result);
+			if(result=="ok"){
+				$('#clear_button').trigger('click'); // 입력란 비우기
+				$('#select_room option:selected').remove();
+			}
+		}, 'text');
+	})
+	.on('click','#submit_button',function(){
+		var hmany=String($('#check_number').val());
+		var hmuch=String($('#price').val());
+		var rtype=String($('#select_room1').val());
+		var rname=String($('#room_name').val());
+		var roomcode=String($('#roomcode').val());
+		if(rname==''||hmany==''||hmuch==''||rtype==''){
+			alert('값을 입력해주세요.');
+			return false;
+		}
+		if($('#roomcode').val()==''){
+			$.post('http://localhost:8080/app/addRoom',{roomname:rname,roomtype:rtype,howmany:hmany,howmuch:hmuch},
+					function(result){
+				if(result=='ok'){
+					location.reload();
+				}
+			},'text');			
+		}else{
+			$.post('http://localhost:8080/app/updateRoom',
+				{roomcode:roomcode,roomname:rname,roomtype:rtype,howmany:hmany,howmuch:hmuch},
+				function(result){
+					if(result=='ok'){
+						location.reload();
+					}
+				})
+		}
 	})
 </script>
 </body>

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -127,5 +128,37 @@ public class HomeController {
 		}
 		//joo.put("data",ja);
 		return ja.toString();
+	}
+	@RequestMapping(value="/deleteRoom", method=RequestMethod.POST, produces="application/text; charset=utf8")
+	@ResponseBody
+	public String deleteRoom(HttpServletRequest hsr) {
+		int roomcode = Integer.parseInt(hsr.getParameter("roomcode"));
+		iRoom room = sqlSession.getMapper(iRoom.class);
+		room.doDeleteRoom(roomcode);
+		return "ok";
+	}
+	@RequestMapping(value="/addRoom", method=RequestMethod.POST, produces="application/text; charset=utf8")
+	@ResponseBody
+	public String addRoom(HttpServletRequest hsr) {
+		String rname = hsr.getParameter("roomname");
+		int rtype = Integer.parseInt(hsr.getParameter("roomtype"));
+		int howmany = Integer.parseInt(hsr.getParameter("howmany"));
+		int howmuch = Integer.parseInt(hsr.getParameter("howmuch"));
+		System.out.println(rname+", "+rtype+", "+howmany+", "+howmuch);
+		iRoom room = sqlSession.getMapper(iRoom.class);
+		room.doAddRoom(rname, rtype, howmany, howmuch);
+		return "ok";
+	}
+	@RequestMapping(value="/updateRoom", method=RequestMethod.POST, produces="application/text; charset=utf8")
+	@ResponseBody
+	public String updateRoom(HttpServletRequest hsr) {
+		int roomcode = Integer.parseInt(hsr.getParameter("roomcode"));
+		String rname = hsr.getParameter("roomname");
+		int rtype = Integer.parseInt(hsr.getParameter("roomtype"));
+		int howmany = Integer.parseInt(hsr.getParameter("howmany"));
+		int howmuch = Integer.parseInt(hsr.getParameter("howmuch"));
+		iRoom room = sqlSession.getMapper(iRoom.class);
+		room.doUpdateRoom(roomcode, rname, rtype, howmany, howmuch);
+		return "ok";
 	}
 }
