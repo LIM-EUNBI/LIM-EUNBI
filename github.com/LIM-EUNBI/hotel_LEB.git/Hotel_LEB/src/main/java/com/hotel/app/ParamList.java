@@ -3,8 +3,7 @@ package com.hotel.app;
 public class ParamList {
 	public String username;
 	public String userid;	
-	public String passcode1;
-	public String passcode2;
+	public String passcode;
 	public String mobile;
 	public String getUsername() {
 		return username;
@@ -18,17 +17,11 @@ public class ParamList {
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
-	public String getPasscode1() {
-		return passcode1;
+	public String getPasscode() {
+		return passcode;
 	}
-	public void setPasscode1(String passcode1) {
-		this.passcode1 = passcode1;
-	}
-	public String getPasscode2() {
-		return passcode2;
-	}
-	public void setPasscode2(String passcode2) {
-		this.passcode2 = passcode2;
+	public void setPasscode(String passcode) {
+		this.passcode = passcode;
 	}
 	public String getMobile() {
 		return mobile;
@@ -36,5 +29,7 @@ public class ParamList {
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
+
+
 	
 }

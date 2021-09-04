@@ -8,4 +8,8 @@ public interface iRoom {
 	void doDeleteRoom(int roomcode);
 	void doAddRoom(String roomname, int roomtype, int howmany, int howmuch);
 	void doUpdateRoom(int roomcode, String roomname, int roomtype, int howmany, int howmuch);
+	/*
+	 * void doJoin(String name, String loginid, String passcode, String mobile); int
+	 * selectOne(String loginid, String passcode);
+	 */
 }

@@ -33,7 +33,7 @@
     </div>
     <div class="room_list_right">
         <h3>객실 이름 ▷ <input type="text" name="room_name" id="room_name"></h3>
-        <h3>숙박 기간 ▷ <input type="date" name="date_1" id="period"> ~ <input type="date" name="date_2" id="period"></h3>
+        <h3>숙박 기간 ▷ <input type="date" name="date_1" id="period1"> ~ <input type="date" name="date_2" id="period2"></h3>
         <h3>숙박 인원 ▷ <input type="text" name="people_num" id="check_number"> 명</h3>
         <h3>1박 비용 ▷ <input type="text" name="price_a_day" id="price"> 원</h3>
         <h3>총 숙박비 ▷ <input type="text" name="total_price" id="total_price"> 원</h3>
@@ -47,5 +47,13 @@
     </div>
     
 </div>
-</body>
+</body> 
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+	$(document)
+	.on('click', '#delete_button', function(){
+		alert($('#period1').val());
+		alert($('#period2').val());
+	})
+</script>
 </html>

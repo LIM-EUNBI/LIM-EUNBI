@@ -62,20 +62,22 @@ public class HomeController {
 		String userpw = hsr.getParameter("userpw");
 		HttpSession session = hsr.getSession();
 		session.setAttribute("loginid", userid);
-		
+		session.setAttribute("passcode", userpw);
 		return "redirect:/room_management";
 	}
 	@RequestMapping("/room_management")
 	public String goRoom(HttpServletRequest hrs, Model model) {
 		HttpSession session = hrs.getSession();
-		String loginid = (String)session.getAttribute("loginid");
+		String login = (String)session.getAttribute("loginid");
+		String passcode = (String)session.getAttribute("passcode");
 		iRoom room = sqlSession.getMapper(iRoom.class);
-		ArrayList<Roominfo> roominfo = room.getRoomList();
+		ArrayList<Roominfo> roominfo = room.getRoomList(); 
 		ArrayList<RoomType> roomtype = room.getRoomType();
 		model.addAttribute("list", roominfo);
 		model.addAttribute("roomType", roomtype);
-		System.out.println(roominfo);
-		if(loginid.equals("ever3622")) {
+		iMember member = sqlSession.getMapper(iMember.class);
+		int result = member.selectOne(login,passcode);
+		if(result>0) {
 			return "room_management";
 		}
 		else {
@@ -92,6 +94,8 @@ public class HomeController {
 	}
 	@RequestMapping(value="/join", method=RequestMethod.POST)
 	public String newinfo(@ModelAttribute("pl") ParamList pl) {
+		iMember member = sqlSession.getMapper(iMember.class);
+		member.doJoin(pl.username, pl.userid, pl.passcode, pl.mobile);
 		return "home";
 	}
 	@RequestMapping("/reservation_management")
