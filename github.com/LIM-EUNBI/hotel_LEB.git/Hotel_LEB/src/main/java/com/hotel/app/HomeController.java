@@ -165,4 +165,61 @@ public class HomeController {
 		room.doUpdateRoom(roomcode, rname, rtype, howmany, howmuch);
 		return "ok";
 	}
+	@RequestMapping(value="/searchRoom", method=RequestMethod.POST, produces="application/text; charset=utf8")
+	@ResponseBody
+	public String searchRoom(HttpServletRequest hsr) {
+		String checkin = hsr.getParameter("checkin");
+		String checkout = hsr.getParameter("checkout");
+		int typecode = Integer.parseInt(hsr.getParameter("typecode"));
+		iRoom room = sqlSession.getMapper(iRoom.class);
+		ArrayList<Roominfo> searchRoom = room.searchRoom(checkin, checkout, typecode);
+		JSONArray ja = new JSONArray();
+		for(int i=0; i<searchRoom.size(); i++) {
+			JSONObject jo = new JSONObject();
+			jo.put("roomcode", searchRoom.get(i).getRoomcode());
+			jo.put("roomname", searchRoom.get(i).getRoomname());
+			jo.put("typename", searchRoom.get(i).getTypename());
+			jo.put("howmany", searchRoom.get(i).getHowmany());
+			jo.put("howmuch", searchRoom.get(i).getHowmuch());
+			ja.add(jo);
+		}
+		return ja.toString();
+	}
+	@RequestMapping(value="book", method=RequestMethod.POST)
+	public String book(HttpServletRequest hsr) {
+		//String roomname=hsr.getParameter("room_name");
+		String period1=hsr.getParameter("date_1");
+		String period2=hsr.getParameter("date_2");
+		int people_num=Integer.parseInt(hsr.getParameter("people_num"));
+		int total_price=Integer.parseInt(hsr.getParameter("total_price"));
+		String username=hsr.getParameter("user_name");
+		String user_phone=hsr.getParameter("user_num");
+		int roomcode=Integer.parseInt(hsr.getParameter("roomcode"));
+		System.out.println(period1+", "+period2+", "+people_num+", "+total_price+", "+username+", "+user_phone+", "+roomcode);
+		iRoom room = sqlSession.getMapper(iRoom.class);
+		room.bookRoom(roomcode,period1,period2,people_num,total_price,username, user_phone);
+		return "reservation_management";
+	}
+	@RequestMapping(value="/showBooking", method=RequestMethod.POST, produces="application/text; charset=utf8")
+	@ResponseBody
+	public String showBooking() {
+		iRoom room = sqlSession.getMapper(iRoom.class);
+		ArrayList<BookUser> book = room.showBooking();
+		JSONArray ja = new JSONArray();
+		for(int i=0; i<book.size(); i++) {
+			JSONObject jo = new JSONObject();
+			jo.put("bookcode", book.get(i).getBookcode());
+			jo.put("roomcode", book.get(i).getRoomcode());
+			jo.put("pcount", book.get(i).getPcount());
+			jo.put("name", book.get(i).getName());
+			jo.put("mobile", book.get(i).getMobile());
+			jo.put("checkin", book.get(i).getCheckin());
+			jo.put("checkout", book.get(i).getCheckout());
+			jo.put("price", book.get(i).getPrice());
+			jo.put("roomname", book.get(i).getRoomname());
+			jo.put("typename", book.get(i).getTypename());
+			ja.add(jo);
+		}
+		return ja.toString();
+	}
 }

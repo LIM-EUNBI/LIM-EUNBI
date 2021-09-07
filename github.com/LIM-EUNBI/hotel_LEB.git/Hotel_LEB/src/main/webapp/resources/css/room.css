@@ -74,6 +74,12 @@ a {
     box-sizing: border-box;
     text-align: left;
 }
+.room_list_right1{
+	width: 40%;
+    float: right;
+    box-sizing: border-box;
+    text-align: right;
+}
 .room_list_center{
     padding-left: 10%;
     width: 80%;
@@ -81,7 +87,14 @@ a {
 }
 #select_room{
     width: 300px;
-    height: 430px;
+    height: 300px;
+    text-align: center;
+    font-size: 18px;
+    background-color: oldlace;
+}
+#select_roomtype{
+    width: 300px;
+    height: 100px;
     text-align: center;
     font-size: 18px;
     background-color: oldlace;

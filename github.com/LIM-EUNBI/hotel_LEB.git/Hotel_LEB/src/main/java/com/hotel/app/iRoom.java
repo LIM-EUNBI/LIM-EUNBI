@@ -8,8 +8,7 @@ public interface iRoom {
 	void doDeleteRoom(int roomcode);
 	void doAddRoom(String roomname, int roomtype, int howmany, int howmuch);
 	void doUpdateRoom(int roomcode, String roomname, int roomtype, int howmany, int howmuch);
-	/*
-	 * void doJoin(String name, String loginid, String passcode, String mobile); int
-	 * selectOne(String loginid, String passcode);
-	 */
+	ArrayList<Roominfo> searchRoom(String checkin, String checkout, int typecode);
+	void bookRoom(int roomcode, String period1, String period2,int people_num, int total_price, String username, String user_phone);
+	ArrayList<BookUser> showBooking();
 }
