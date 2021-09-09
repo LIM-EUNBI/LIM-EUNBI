@@ -22,32 +22,5 @@
 		update room set name=#{param2}, type=#{param3}, howmany=#{param4}, howmuch=#{param5}
 		where roomcode=#{param1}
 	</update>
-	<select id="searchRoom" resultType="com.hotel.app.Roominfo">
-		select roomcode, name roomname, 
-    	(select name from roomtype where typecode=#{param3}) as typename,
-    	howmany, howmuch
-		from room 
-		where type=#{param3} and roomcode not in(
-		select roomcode from room
-		INTERSECT
-		select roomcode from booking where (checkin between #{param1} and #{param2}) 
-		or (checkout between #{param1} and #{param2}) or <![CDATA[(checkin<#{param1} and checkout>#{param2}))]]>	
-	</select>
-	<insert id="bookRoom">
-		insert into booking(bookcode, roomcode, checkin, checkout, pcount, price, name, mobile)
-		values(
-			seq_book.nextval,
-			#{param1},
-			#{param2},
-			#{param3},
-			#{param4},
-			#{param5},
-			#{param6},
-			#{param7}
-		)
-	</insert>
-	<select id="showBooking" resultType="com.hotel.app.BookUser">
-		select a.bookcode, a.checkin, a.checkout, a.mobile, a.name, a.price, a.pcount, a.roomcode, b.name roomname, c.name typename from booking a, room b, roomtype c
-		where a.roomcode = b.roomcode and b.type=c.typecode
-	</select>
+	
 </mapper>

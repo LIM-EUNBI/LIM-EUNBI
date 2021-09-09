@@ -17,7 +17,7 @@
         <h3 class="menu"><a href="logout">로그아웃</a></h3>
         <hr>
     </div>
-    <div class="room_list_left">
+    <!-- <div class="room_list_left"> -->
     <div class="none_div"></div>
     <div class="room_list_center">
         <table class="reservation_table">
@@ -39,8 +39,8 @@
         </tbody>
         </table>
     </div>
-</div>
-<div class="room_list_right">
+<!-- </div> -->
+<!-- <div class="room_list_right">
     	<form action="book" method="post">
         <h3>객실 이름 ▷ <input type="text" name="room_name" id="room_name"></h3>
         <h3>숙박 기간 ▷ <input type="date" name="date_1" id="period1_2"> ~ <input type="date" name="date_2" id="period2_2"></h3>
@@ -55,7 +55,7 @@
             <input type="reset" value="clear" id="clear_button">
         </div>
         </form>
-    </div>
+    </div> -->
 </body>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>
@@ -64,7 +64,7 @@
 		$.post("http://localhost:8080/app/showBooking",{},function(result){
 			console.log(result);
 			$.each(result, function(idx,value){
-				str = '<tr> <td>'+value['roomname']+'</td> <td>'+value['typename']+'</td> <td>'+value['checkin']+'</td> <td>'+value['checkout']+'</td> <td>'+value['pcount']+'</td> <td>'+value['name']+'</td> <td>'+value['mobile']+'</tr>';
+				str = '<tr> <td>'+value['roomname']+'</td> <td>'+value['typename']+'</td> <td>'+value['checkin']+'</td> <td>'+value['checkout']+'</td> <td>'+value['pcount']+'</td> <td>'+value['name']+'</td> <td>'+value['mobile']+'</td> <td><input type=button id="delete_button" value="삭제"></td></tr>';
 				$('#book_table').append(str);
 			});
 			/* $.each(result, function(idx,value){
@@ -72,6 +72,18 @@
 				$('#select_room').append(str);
 			}); */
 		},'json')	
+	})
+	.on('click', '#delete_button', function(){
+	    //var str = $('#book_table tr').val();
+		var str1 = ""
+		var tdArr = new Array();
+		
+		//var tr = $(this);
+		var tr = $(this);
+		var td = tr.children();
+		
+			//console.log("클릭한 row의 모든 데이터 : "+tr.text());
+		alert(td.text())
 	})
 	.on('click', '#book_table tr', function(){
 		var str = ""

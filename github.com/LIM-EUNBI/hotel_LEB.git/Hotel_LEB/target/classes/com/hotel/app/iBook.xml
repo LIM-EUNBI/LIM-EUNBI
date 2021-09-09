@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.hotel.app.iBook">
+<select id="searchRoom" resultType="com.hotel.app.Roominfo">
+		select roomcode, name roomname, 
+    	(select name from roomtype where typecode=#{param3}) as typename,
+    	howmany, howmuch
+		from room 
+		where type=#{param3} and roomcode not in(
+		select roomcode from room
+		INTERSECT
+		select roomcode from booking where (checkin between #{param1} and to_date(#{param2})-1) 
+		or (checkout between to_date(#{param1})+1 and to_date(#{param2})) or <![CDATA[(checkin<#{param1} and checkout>to_date(#{param2})-1))]]>	
+	</select>
+	<insert id="bookRoom">
+		insert into booking(bookcode, roomcode, checkin, checkout, pcount, price, name, mobile)
+		values(
+			seq_book.nextval,
+			#{param1},
+			#{param2},
+			#{param3},
+			#{param4},
+			#{param5},
+			#{param6},
+			#{param7}
+		)
+	</insert>
+	<select id="showBooking" resultType="com.hotel.app.BookUser">
+		select a.bookcode, to_char(a.checkin,'YYYY-MM-DD') as checkin, to_char(a.checkout, 'YYYY-MM-DD') as checkout, a.mobile, a.name, a.price, a.pcount, a.roomcode, b.name roomname, c.name typename from booking a, room b, roomtype c
+		where a.roomcode = b.roomcode and b.type=c.typecode
+	</select>
+	<select id="showRoomTypeBook" resultType="com.hotel.app.BookUser">
+		select a.bookcode, to_char(a.checkin,'YYYY-MM-DD') as checkin, to_char(a.checkout, 'YYYY-MM-DD') as checkout, a.mobile, a.name, a.price, a.pcount, a.roomcode, b.name roomname, c.name typename from booking a, room b, roomtype c
+		where a.roomcode = b.roomcode and b.type=c.typecode and b.type=#{param3} and a.checkin between #{param1} and #{param2} and a.checkout between #{param1} and #{param2} 
+	</select>
+	<update id="updateBook">
+		update booking set
+			roomcode=#{param1},
+			pcount=#{param4},
+			name=#{param6},
+			mobile=#{param7},
+			checkin=#{param2},
+			checkout=#{param3},
+			price=#{param5}
+		where bookcode=#{param8}
+	</update>
+	<delete id="deleteBook">
+		delete from booking where bookcode=#{bookcode}
+	</delete>
+</mapper>
