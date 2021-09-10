@@ -273,6 +273,29 @@ public class HomeController {
 		book.deleteBook(bookcode);
 		return "ok";
 	}
+	@RequestMapping(value="/search_name", method=RequestMethod.POST, produces="application/text; charset=utf8")
+	@ResponseBody
+	public String search_name(HttpServletRequest hsr) {
+		String username = hsr.getParameter("username");
+		iBook book = sqlSession.getMapper(iBook.class);
+		ArrayList<BookUser> fine_book = book.searchBook(username);
+		JSONArray ja = new JSONArray();
+		for(int i=0; i<fine_book.size(); i++) {
+			JSONObject jo = new JSONObject();
+			jo.put("bookcode", fine_book.get(i).getBookcode());
+			jo.put("roomcode", fine_book.get(i).getRoomcode());
+			jo.put("pcount", fine_book.get(i).getPcount());
+			jo.put("name", fine_book.get(i).getName());
+			jo.put("mobile", fine_book.get(i).getMobile());
+			jo.put("checkin", fine_book.get(i).getCheckin());
+			jo.put("checkout", fine_book.get(i).getCheckout());
+			jo.put("price", fine_book.get(i).getPrice());
+			jo.put("roomname", fine_book.get(i).getRoomname());
+			jo.put("typename", fine_book.get(i).getTypename());
+			ja.add(jo);
+		}
+		return ja.toString();
+	}
 }
 
 

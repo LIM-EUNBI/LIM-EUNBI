@@ -48,4 +48,8 @@
 	<delete id="deleteBook">
 		delete from booking where bookcode=#{bookcode}
 	</delete>
+	<select id="searchBook" resultType="com.hotel.app.BookUser">
+		select a.bookcode, to_char(a.checkin,'YYYY-MM-DD') as checkin, to_char(a.checkout, 'YYYY-MM-DD') as checkout, a.mobile, a.name, a.price, a.pcount, a.roomcode, b.name roomname, c.name typename from booking a, room b, roomtype c
+		where a.roomcode = b.roomcode and b.type=c.typecode and a.name=#{param1}
+	</select>
 </mapper>

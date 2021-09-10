@@ -16,7 +16,9 @@ body {
     width: 60%;
     margin: 0 auto;
 }
-
+.menu_div {
+	width:80%;
+}
 .menu1{
     display: inline;
     margin-left: 100px;
@@ -79,15 +81,16 @@ a {
     float: left;
     box-sizing: border-box;
     text-align: left;
-    padding-right: 50px;
-    padding-left: 200px;
+    padding-right: 0px;
+    padding-left: 100px;
 }
 .room_list_right1{
-	width: 30%;
+	width: 33%;
     float: left;
     box-sizing: border-box;
     text-align: left;
     padding-top: 20px;
+    padding-left: 30px;
 }
 .room_list_right2{
 	width: 33%;
@@ -117,6 +120,7 @@ a {
     background-color: oldlace;
     overflow: scroll;
 }
+
 #select_roomtype{
     width: 300px;
     height: 100px;
@@ -135,14 +139,35 @@ a {
     height: 20px;
     padding-bottom: 5px;
 }
-#period1, #period2{
+#period1_1, #period2_1, #period1_2, #period2_2{
     height: 25px;
     width: 150px;
-    padding-bottom: 5px;
 }
 #price, #total_price, #check_number, #user_name, #user_num{
     height: 25px;
     padding: 0px;
+}
+#user{
+	height: 30px;
+    padding: 0px;
+    background-color: antiquewhite;
+    border:none;
+}
+#search_sel, #search_btn{
+	width: 60px;
+	height: 28px;
+	background-color: antiquewhite;
+    border: solid tan 1px;
+    font-size: 15px;
+    font-style: bold;
+}
+#search_btn{
+	width: 60px;
+	height: 30px;
+	background-color: antiquewhite;
+    border: solid tan 1px;
+    font-size: 15px;
+    font-style: bold;
 }
 #submit_button, #delete_button, #clear_button{
     width: 70px;
