@@ -29,19 +29,19 @@
         </select><br>
         <input type="button" value="조회" id="btn_search">
         <h3 style="padding-right: 19%;">예약 가능 ▽ </h3>
-        <select size=7 multiple id="select_room">
+        <select size=7 multiple id="select_room3">
 
         </select>
     </div>
     <div class="room_list_right1">
-    	<!-- <form action="book" method="post"> -->
-        <h3>객실 이름 ▷ <input type="text" name="room_name" id="room_name" required readonly></h3>
-        <h3>숙박 기간 ▷ <input type="date" name="date_1" id="period1_2" required readonly> ~ <input type="date" name="date_2" id="period2_2" required readonly></h3>
-        <h3>숙박 인원 ▷ <input type="text" name="people_num" id="check_number" > 명</h3>
-        <h3>1박 비용 ▷ <input type="text" name="price_a_day" id="price" > 원</h3>
-        <h3>총 숙박비 ▷ <input type="text" name="total_price" id="total_price" > 원</h3>
+    	<!-- <form action="book" method="post"> --><input type="hidden"><br><br>
+        <h3>객실 이름 &nbsp;&nbsp;&nbsp;▷ <input type="text" name="room_name" id="room_name" required readonly></h3>
+        <h3>숙박 기간 &nbsp;&nbsp;&nbsp;▷ <input type="date" name="date_1" id="period1_2" required readonly><br><br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;~ <input type="date" name="date_2" id="period2_2" required readonly></h3>
+        <h3>숙박 인원 &nbsp;&nbsp;&nbsp;▷ <input type="text" name="people_num" id="check_number" > 명</h3>
+        <h3>1박 비용 &nbsp;&nbsp;&nbsp;&nbsp;▷ <input type="text" name="price_a_day" id="price" > 원</h3>
+        <h3>총 숙박비 &nbsp;&nbsp;&nbsp;▷ <input type="text" name="total_price" id="total_price" > 원</h3>
         <h3>예약자 성함 ▷ <input type="text" name="user_name" id="user_name" ></h3>
-        <h3>예약자 핸드폰 번호 ▷ <input type="text" name="user_num" id="user_num" ></h3>
+        <h3>핸드폰 번호 ▷ <input type="text" name="user_num" id="user_num" ></h3>
         <input type="hidden" name="roomcode" id="roomcode">
         <input type="hidden" name="bookcode" id="bookcode">
         <div class="button_list">
@@ -72,10 +72,10 @@
 		$.post('http://localhost:8080/app/searchRoom',{checkin:checkin,checkout:checkout,typecode:typecode},
 				function(result){
 				console.log(result);
-				$('#select_room').children('option').remove();
+				$('#select_room3').children('option').remove();
 				$.each(result, function(idx,value){
 					str='<option value="'+value['roomcode']+'">'+value['roomname']+', '+value['typename']+', '+value['howmany']+', '+value['howmuch']+'</option>';
-					$('#select_room').append(str);
+					$('#select_room3').append(str);
 				});
 		},'json')
 		$.post('http://localhost:8080/app/searchBook',{checkin:checkin,checkout:checkout,typecode:typecode},
@@ -89,9 +89,9 @@
 		},'json');
 		
 	})
-	.on('click', '#select_room', function(){
-		var str = $('#select_room option:selected').text();
-		var roomcode = String($('#select_room option:selected').val())
+	.on('click', '#select_room3', function(){
+		var str = $('#select_room3 option:selected').text();
+		var roomcode = String($('#select_room3 option:selected').val())
 		var room = String(str).split(',');
 		var checkin = String($('#period1_1').val());
 		var checkout = String($('#period2_1').val());
@@ -184,6 +184,7 @@
 	})
 	.on('click', '#delete_button', function(){
 		var bookcode = $('#bookcode').val();
+		if(confirm('정말로 삭제하시겠습니까?')){
 		$.post('http://localhost:8080/app/deleteBook', {bookcode:bookcode},
 				function(result){
 				console.log(result);
@@ -191,6 +192,7 @@
 				$('#select_room5').children('option').remove();
 				$('#btn_search').trigger('click');
 		},'text');
+		}
 	})
 </script>
 </html>

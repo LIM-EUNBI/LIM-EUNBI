@@ -16,6 +16,7 @@
         <h3 class="menu"><a href="reservation_management">예약 등록</a></h3>
         <h3 class="menu"><a href="show_all">예약 보기</a></h3>
         <h3 class="menu"><a href="logout">로그아웃</a></h3>
+        <%-- <h3>${loginid}</h3> --%>
         <hr>
     </div>
     <div class="room_list">
@@ -30,7 +31,7 @@
         </div>
     </div>
     <div class="room_list_right">
-        <input type="hidden" name="roomcode" id="roomcode">
+        <input type="hidden" name="roomcode" id="roomcode"><br><br>
         <h3>객실 이름 ▷ <input type="text" name="roomname" id="room_name"></h3>
         <h3>객실 분류 ▽ </h3>
         <select size=7 multiple id="select_room1">
@@ -93,6 +94,7 @@
 		$('#select_room1 option:selected').prop("selected", false);
 	})
 	.on('click','#delete_button',function(){
+		if(confirm("정말 삭제하시겠습니까?")){
 		$.post('http://localhost:8080/app/deleteRoom',{roomcode:$('#roomcode').val()},
 				function(result){
 			console.log(result);
@@ -101,6 +103,7 @@
 				$('#select_room option:selected').remove();
 			}
 		}, 'text');
+		}
 	})
 	.on('click','#submit_button',function(){
 		var hmany=String($('#check_number').val());

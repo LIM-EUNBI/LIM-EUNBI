@@ -58,12 +58,14 @@
 		//console.log("클릭한 row의 모든 데이터 : "+tr.text());
 		var bookcode = td.eq(6).text()
 		//alert(bookcode)
+		if(confirm('정말로 삭제하시겠습니까?')){
 		$.post('http://localhost:8080/app/deleteBook', {bookcode:bookcode},
 				function(result){
 				console.log(result);
 				alert('정상적으로 삭제되었습니다.');
 				location.reload();
 		},'text');
+		}
 	})
 	.on('click','#search_btn',function(){
 		if($('#search_sel').val()==1){

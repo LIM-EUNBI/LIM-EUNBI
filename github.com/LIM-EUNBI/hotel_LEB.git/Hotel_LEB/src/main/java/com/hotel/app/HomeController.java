@@ -51,10 +51,12 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping("/login")
-	public String goLoing() {
-		return "login";
-	}
+	
+	  @RequestMapping("/login") 
+	  public String goLoing() { 
+		  return "login"; 
+		  }
+	 
 	
 	@RequestMapping(value="/check_user",method=RequestMethod.POST)
 	public String go_room(HttpServletRequest hsr, Model model) {
@@ -75,13 +77,14 @@ public class HomeController {
 		ArrayList<RoomType> roomtype = room.getRoomType();
 		model.addAttribute("list", roominfo);
 		model.addAttribute("roomType", roomtype);
+		model.addAttribute("loginid", login);
 		iMember member = sqlSession.getMapper(iMember.class);
 		int result = member.selectOne(login,passcode);
 		if(result>0) {
 			return "room_management";
 		}
 		else {
-			return "redirect:/home";
+			return "redirect:/login";
 		}
 	}
 	@RequestMapping("/home")
